@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'modulor-front';
+  title = 'Frontal para Modulor Arquitectura hecha en Angular';
 }
