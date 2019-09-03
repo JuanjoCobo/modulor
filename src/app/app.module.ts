@@ -7,6 +7,7 @@ import { MenuComponent } from "./components/menu/menu.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { ProjectsComponent } from "./components/projects/projects.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { ProjectCreateComponent } from './components/projects/project-create/project-create.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AppRoutingModule } from "./app-routing.module";
     HomeComponent,
     MenuComponent,
     FooterComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    ProjectCreateComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
