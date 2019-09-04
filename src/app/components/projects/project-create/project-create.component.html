@@ -1,1 +1,26 @@
-<p>project-create works!</p>
+<form class="example-form">
+  <p>
+    <mat-form-field appearance="legacy">
+      <mat-label>Nombre Proyecto</mat-label>
+      <input matInput [(ngModel)]="title" name="title" />
+      <mat-hint>Escribe</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="legacy">
+      <mat-label>Descripción Proyecto</mat-label>
+      <input matInput [(ngModel)]="description" name="description" />
+      <mat-hint>Escribe</mat-hint>
+    </mat-form-field>
+  </p>
+  <button mat-raised-button color="primary" (click)="addProject()">
+    Crear Proyecto
+  </button>
+  <button mat-raised-button color="warn" (click)="reset()">
+    Reset
+  </button>
+</form>
+
+<p>
+  {{ total }}
+</p>
