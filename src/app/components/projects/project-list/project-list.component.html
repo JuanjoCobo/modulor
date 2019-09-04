@@ -4,11 +4,12 @@
   <app-project-create></app-project-create>
 
   <!-- Esta listado iría en la parte interna de gestión -->
-  <mat-accordion class="example-headers-align" *ngFor="let project of projects">
+  <mat-accordion class="example-headers-align" >
     <mat-expansion-panel
       [expanded]="step === 0"
       (opened)="setStep(0)"
       hideToggle
+      *ngFor="let project of projects"
     >
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -54,8 +55,8 @@
     >
       <div class="my-3 py-3">
         <!-- mostrar proyectos del back-->
-        <h2 class="display-5">Nombre: {{ project.name }}</h2>
-        <p class="lead">Contenido: {{ project.content }}</p>
+        <h2 class="display-5">Nombre: {{ project.title }}</h2>
+        <p class="lead">Contenido: {{ project.description }}</p>
       </div>
       <div
         class="bg-light shadow-sm mx-auto"
