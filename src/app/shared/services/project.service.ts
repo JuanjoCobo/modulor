@@ -1,4 +1,4 @@
-import { Project } from "./project.model";
+import { Project } from "../project.model";
 
 export class ProjectService {
   private projects: Project[] = [];
@@ -8,7 +8,7 @@ export class ProjectService {
   }
 
   addProject(name: string, content: string) {
-    const project: Project = { name: name, content: content };
+    const project: Project = { title: name, description: content };
     this.projects.push(project);
   }
 }

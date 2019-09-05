@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 
-import { Project } from "../project.model";
+import { Project } from "../../../shared/project.model";
+
+import { ProjectService } from "../../../shared/services/project.service";
 
 @Component({
   selector: "app-project-list",
@@ -8,12 +10,7 @@ import { Project } from "../project.model";
   styleUrls: ["./project-list.component.css"]
 })
 export class ProjectListComponent implements OnInit {
-  projects = [
-    { title: "Proyecto 1", description: "Info 1" },
-    { title: "Proyecto 220", description: "Info 2" }
-  ];
-
-  //@Input() projects: Project[] = [];
+  @Input() projects: Project[] = [];
 
   constructor() {}
 
