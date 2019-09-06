@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 import { Project } from "../../../shared/project.model";
 
@@ -10,9 +10,16 @@ import { ProjectService } from "../../../shared/services/project.service";
   styleUrls: ["./project-list.component.css"]
 })
 export class ProjectListComponent implements OnInit {
-  @Input() projects: Project[] = [];
+  projects: Project[] = [];
 
-  constructor() {}
+  constructor(public projectService: ProjectService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projects = this.projectService.getProjects();
+    this.projectService
+      .getProjectUpdateListener()
+      .subscribe((projects: Project[]) => {
+        this.projects = projects;
+      });
+  }
 }

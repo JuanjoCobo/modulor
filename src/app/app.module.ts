@@ -19,6 +19,7 @@ import { ProjectCreateComponent } from "./components/projects/project-create/pro
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProjectNavComponent } from "./components/projects/project-nav/project-nav.component";
 import { ProjectListComponent } from "./components/projects/project-list/project-list.component";
+//import { ProjectService } from "./shared/services/project.service";
 
 @NgModule({
   declarations: [

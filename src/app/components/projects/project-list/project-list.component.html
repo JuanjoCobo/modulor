@@ -52,6 +52,7 @@
   ></div>
 </div>
 -->
+  <!-- Este listado de cards de proyectos va en la parte pública -->
   <h3>Proyectos</h3>
   <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div
@@ -60,8 +61,8 @@
     >
       <div class="my-3 py-3">
         <!-- mostrar proyectos del back-->
-        <h2 class="display-5">Nombre: {{ project.name }}</h2>
-        <p class="lead">Contenido: {{ project.content }}</p>
+        <h2 class="display-5">Nombre: {{ project.title }}</h2>
+        <p class="lead">Contenido: {{ project.description }}</p>
       </div>
       <div
         class="bg-light shadow-sm mx-auto"
@@ -69,4 +70,5 @@
       ></div>
     </div>
   </div>
+  <!-- / Fin listado proyectos públicos -->
 </div>

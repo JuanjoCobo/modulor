@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
 import { Project } from "../../../shared/project.model";
@@ -11,17 +11,15 @@ import { ProjectService } from "../../../shared/services/project.service";
   styleUrls: ["./project-create.component.css"]
 })
 export class ProjectCreateComponent implements OnInit {
-  @Output() projectCreated = new EventEmitter<Project>();
-
-  constructor() {}
+  constructor(public projectService: ProjectService) {}
 
   ngOnInit() {}
 
   addProject(form: NgForm) {
-    const project: Project = {
-      title: form.value.title,
-      description: form.value.description
-    };
-    this.projectCreated.emit(project);
+    if (form.invalid) {
+      return;
+    }
+
+    this.projectService.addProject(form.value.title, form.value.description);
   }
 }
