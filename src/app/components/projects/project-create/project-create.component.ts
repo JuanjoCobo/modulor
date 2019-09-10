@@ -21,5 +21,6 @@ export class ProjectCreateComponent implements OnInit {
     }
 
     this.projectService.addProject(form.value.title, form.value.description);
+    form.resetForm();
   }
 }

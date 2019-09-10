@@ -3,7 +3,7 @@
 >
   <app-project-create></app-project-create>
 
-  <!-- Esta listado iría en la parte interna de gestión -->
+  <!-- Esta listado va en la parte interna de gestión -->
   <mat-accordion class="example-headers-align">
     <mat-expansion-panel
       *ngFor="let project of projects"
@@ -12,15 +12,15 @@
       hideToggle
     >
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ project.title }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ project.description }}
-          <!-- Mostrar imagen proyecto en miniatura -->
-        </mat-panel-description>
+        {{ project.title }}
+        <!-- Mostrar imagen proyecto en miniatura -->
       </mat-expansion-panel-header>
 
+      <mat-panel-description>
+        {{ project.description }}
+      </mat-panel-description>
+
+      <!--
       <mat-form-field>
         <input matInput placeholder="First name" />
       </mat-form-field>
@@ -28,6 +28,11 @@
       <mat-form-field>
         <input matInput type="number" min="1" placeholder="Age" />
       </mat-form-field>
+      -->
+      <mat-action-row>
+        <button mat-button color="accent">EDITAR</button>
+        <button mat-button color="warn">ELIMINAR</button>
+      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
 
@@ -35,7 +40,7 @@
     No hay proyectos todavía
   </div>
 
-  <!-- / Fin listado gestión -->
+  <!-- / Fin listado gestion -->
 
   <!--
   <div class="col-md-5 p-lg-5 mx-auto my-5">
@@ -52,7 +57,7 @@
   ></div>
 </div>
 -->
-  <!-- Este listado de cards de proyectos va en la parte pública -->
+  <!-- Este listado de cards de proyectos va en la parte publica -->
   <h3>Proyectos</h3>
   <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div
@@ -70,5 +75,5 @@
       ></div>
     </div>
   </div>
-  <!-- / Fin listado proyectos públicos -->
+  <!-- / Fin listado proyectos publicos -->
 </div>
