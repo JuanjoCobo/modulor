@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
 
 import { Project } from "../project.model";
@@ -13,9 +14,18 @@ export class ProjectService {
   private projects: Project[] = [];
   private projectsUpdated = new Subject<Project[]>();
 
+  constructor(private http: HttpClient) {}
+
   //Obtiene todos los proyectos
   getProjects() {
-    return this.projects;
+    this.http
+      .get<{ message: string; projects: Project[] }>(
+        "http://localhost:3000/api/projects"
+      )
+      .subscribe(projectData => {
+        this.projects = projectData.projects;
+        this.projectsUpdated.next([...this.projects]);
+      });
   }
 
   getProjectUpdateListener() {
@@ -24,7 +34,11 @@ export class ProjectService {
 
   //Añade un proyecto
   addProject(title: string, description: string) {
-    const project: Project = { title: title, description: description };
+    const project: Project = {
+      id: null,
+      title: title,
+      description: description
+    };
     this.projects.push(project);
     this.projectsUpdated.next([...this.projects]);
   }

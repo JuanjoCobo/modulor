@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 import {
   MatInputModule,
   MatFormFieldModule,
@@ -36,6 +37,7 @@ import { ProjectListComponent } from "./components/projects/project-list/project
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatFormFieldModule,
