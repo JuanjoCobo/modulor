@@ -39,7 +39,12 @@ export class ProjectService {
       title: title,
       description: description
     };
-    this.projects.push(project);
-    this.projectsUpdated.next([...this.projects]);
+    this.http
+      .post<{ message: string }>("http://localhost:3000/api/projects", project)
+      .subscribe(responseData => {
+        console.log(responseData.message);
+        this.projects.push(project);
+        this.projectsUpdated.next([...this.projects]);
+      });
   }
 }
