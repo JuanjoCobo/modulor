@@ -1,41 +1,48 @@
-<form
-  class="example-form"
-  (submit)="addProject(projectForm)"
-  #projectForm="ngForm"
->
-  <p>
-    <mat-form-field appearance="legacy">
-      <mat-label>Título proyecto</mat-label>
-      <input
-        matInput
-        type="text"
-        name="title"
-        ngModel
-        required
-        minlength="3"
-        #title="ngModel"
-      />
-      <mat-error *ngIf="title.invalid"
-        >Por favor, introduce un título válido.</mat-error
-      >
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="legacy">
-      <mat-label>Descripción proyecto</mat-label>
-      <textarea
-        matInput
-        rows="4"
-        name="description"
-        ngModel
-        required
-      ></textarea>
-    </mat-form-field>
-  </p>
-  <button mat-raised-button color="primary" type="submit">
-    Crear Proyecto
-  </button>
-  <button mat-raised-button color="link" type="reset">
-    Restaurar
-  </button>
-</form>
+<div class="container">
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/proyectos']" routerLinkActive="active"
+      ><span>Ver proyectos</span></a
+    >
+  </li>
+  <form
+    class="example-form"
+    (submit)="addProject(projectForm)"
+    #projectForm="ngForm"
+  >
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Título proyecto</mat-label>
+        <input
+          matInput
+          type="text"
+          name="title"
+          [(ngModel)]="project.title"
+          required
+          minlength="3"
+          #title="ngModel"
+        />
+        <mat-error *ngIf="title.invalid"
+          >Por favor, introduce un título válido.</mat-error
+        >
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Descripción proyecto</mat-label>
+        <textarea
+          matInput
+          rows="4"
+          name="description"
+          [(ngModel)]="project.description"
+          required
+        ></textarea>
+      </mat-form-field>
+    </p>
+    <button mat-raised-button color="primary" type="submit">
+      Crear Proyecto
+    </button>
+    <button mat-raised-button color="link" type="reset">
+      Restaurar
+    </button>
+  </form>
+</div>

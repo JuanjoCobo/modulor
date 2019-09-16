@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
-import { Project } from "../../../shared/project.model";
-
 import { ProjectService } from "../../../shared/services/project.service";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Project } from "src/app/shared/project.model";
 
 @Component({
   selector: "app-project-create",
@@ -11,9 +11,28 @@ import { ProjectService } from "../../../shared/services/project.service";
   styleUrls: ["./project-create.component.css"]
 })
 export class ProjectCreateComponent implements OnInit {
-  constructor(public projectService: ProjectService) {}
+  private mode = "create";
+  private projectId: string;
 
-  ngOnInit() {}
+  public project: Project;
+
+  constructor(
+    public projectService: ProjectService,
+    public route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has("projectId")) {
+        this.mode = "edit";
+        this.projectId = paramMap.get("projectId");
+        this.project = this.projectService.getProjectById(this.projectId);
+      } else {
+        this.mode = "create";
+        this.projectId = null;
+      }
+    });
+  }
 
   addProject(form: NgForm) {
     if (form.invalid) {
@@ -21,6 +40,23 @@ export class ProjectCreateComponent implements OnInit {
     }
 
     this.projectService.addProject(form.value.title, form.value.description);
+    form.resetForm();
+  }
+
+  onSaveProject(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+    if (this.mode === "create") {
+      this.projectService.addProject(form.value.title, form.value.description);
+    } else {
+      this.projectService.updateProject(
+        this.projectId,
+        form.value.title,
+        form.value.description
+      );
+    }
+
     form.resetForm();
   }
 }

@@ -25,6 +25,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       });
   }
 
+  onDelete(projectId: string) {
+    this.projectService.deleteProject(projectId);
+  }
+
   ngOnDestroy() {
     this.projectsSub.unsubscribe();
   }

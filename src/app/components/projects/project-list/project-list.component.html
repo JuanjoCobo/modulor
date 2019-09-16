@@ -1,7 +1,7 @@
 <div
   class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
 >
-  <app-project-create></app-project-create>
+  <app-project-nav></app-project-nav>
 
   <!-- Este listado va en la parte interna de gestión -->
   <mat-accordion class="example-headers-align">
@@ -30,8 +30,16 @@
       </mat-form-field>
       -->
       <mat-action-row>
-        <button mat-button color="accent">EDITAR</button>
-        <button mat-button color="warn">ELIMINAR</button>
+        <button
+          mat-button
+          color="accent"
+          [routerLink]="['/editar-proyecto', project.id]"
+        >
+          EDITAR
+        </button>
+        <button mat-button color="warn" (click)="onDelete(project.id)">
+          ELIMINAR
+        </button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
