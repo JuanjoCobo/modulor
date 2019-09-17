@@ -1,0 +1,76 @@
+const express = require("express");
+
+const Project = require("../models/project");
+
+const router = express.Router();
+//devuelve proyectos al front
+router.get("", (req, res, next) => {
+  const projects = [
+    {
+      id: "sldf1232",
+      title: "Primer proyecto del servidor",
+      description: "contenido 1"
+    },
+    {
+      id: "sldf1768",
+      title: "Segundo proyecto del servidor",
+      description: "contenido 2"
+    }
+  ];
+
+  Project.find().then(documents => {
+    res.status(200).json({
+      message: "Projects fetched successfully",
+      projects: documents
+    });
+  });
+});
+
+//busca y devuelve un proyecto
+router.get("/:id", (req, res, next) => {
+  Project.findById(req.params.id).then(project => {
+    if (project) {
+      res.status(200).json(project);
+    } else {
+      res.status(404).json({ message: "Project not found" });
+    }
+  });
+});
+
+//aniade proyecto
+router.post("", (req, res, next) => {
+  const project = new Project({
+    title: req.body.title,
+    description: req.body.description
+  });
+  project.save().then(createdProject => {
+    res.status(201).json({
+      message: "Project added successfully!",
+      projectId: createdProject._id
+    });
+  });
+});
+
+//edita proyecto
+router.put("/:id", (req, res, next) => {
+  const project = new Project({
+    _id: req.body.id,
+    title: req.body.title,
+    description: req.body.description
+  });
+  Project.updateOne({ _id: req.params.id }, project).then(result => {
+    res.status(200).json({ message: "Update successfully" });
+  });
+});
+
+//elimina proyecto
+router.delete("/:id", (req, res, next) => {
+  Project.deleteOne({ _id: req.params.id }).then(result => {
+    console.log(result);
+    res.status(200).json({ message: "Project deleted!" });
+  });
+
+  //metodo borrar de la BBDD una vez pueda trabajar con ella en casa
+});
+
+module.exports = router;
