@@ -14,7 +14,10 @@ export class ProjectCreateComponent implements OnInit {
   private mode = "create";
   private projectId: string;
 
-  public project: Project;
+  //para spinner
+  isLoading: boolean = false;
+
+  project: Project;
 
   constructor(
     public projectService: ProjectService,
@@ -26,7 +29,17 @@ export class ProjectCreateComponent implements OnInit {
       if (paramMap.has("projectId")) {
         this.mode = "edit";
         this.projectId = paramMap.get("projectId");
-        this.project = this.projectService.getProjectById(this.projectId);
+        this.isLoading = true;
+        this.projectService
+          .getProjectById(this.projectId)
+          .subscribe(projectData => {
+            this.isLoading = false;
+            this.project = {
+              id: projectData._id,
+              title: projectData.title,
+              description: projectData.description
+            };
+          });
       } else {
         this.mode = "create";
         this.projectId = null;
@@ -34,19 +47,11 @@ export class ProjectCreateComponent implements OnInit {
     });
   }
 
-  addProject(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
-
-    this.projectService.addProject(form.value.title, form.value.description);
-    form.resetForm();
-  }
-
   onSaveProject(form: NgForm) {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     if (this.mode === "create") {
       this.projectService.addProject(form.value.title, form.value.description);
     } else {
@@ -56,7 +61,6 @@ export class ProjectCreateComponent implements OnInit {
         form.value.description
       );
     }
-
     form.resetForm();
   }
 }

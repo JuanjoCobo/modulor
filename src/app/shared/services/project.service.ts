@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
+import { Router } from "@angular/router";
 
 import { Project } from "../project.model";
 
@@ -16,7 +17,7 @@ export class ProjectService {
 
   public url: string = "http://localhost:3000/api/projects";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //Obtiene todos los proyectos
   getProjects() {
@@ -33,7 +34,9 @@ export class ProjectService {
   }
 
   getProjectById(id: string) {
-    return { ...this.projects.find(p => p.id === id) };
+    return this.http.get<{ _id: string; title: string; description: string }>(
+      this.url + "/" + id
+    );
   }
 
   //Añadir un proyecto
@@ -49,6 +52,8 @@ export class ProjectService {
         console.log(responseData.message);
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
+        //spinner
+        this.router.navigate(["/proyectos"]);
       });
   }
 
@@ -65,6 +70,8 @@ export class ProjectService {
         console.log(responseData.message);
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
+        //spinner
+        this.router.navigate(["/proyectos"]);
       });
   }
 

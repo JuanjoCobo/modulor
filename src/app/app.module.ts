@@ -8,7 +8,8 @@ import {
   MatInputModule,
   MatFormFieldModule,
   MatButtonModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatProgressSpinnerModule
 } from "@angular/material";
 
 import { AppComponent } from "./app.component";
@@ -42,7 +43,8 @@ import { ProjectListComponent } from "./components/projects/project-list/project
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

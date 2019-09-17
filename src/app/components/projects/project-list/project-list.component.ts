@@ -12,15 +12,18 @@ import { ProjectService } from "../../../shared/services/project.service";
 })
 export class ProjectListComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
+  isLoading: boolean = false;
   private projectsSub: Subscription;
 
   constructor(public projectService: ProjectService) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.projectService.getProjects();
     this.projectsSub = this.projectService
       .getProjectUpdateListener()
       .subscribe((projects: Project[]) => {
+        this.isLoading = false;
         this.projects = projects;
       });
   }

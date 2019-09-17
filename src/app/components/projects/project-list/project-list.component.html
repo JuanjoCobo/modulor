@@ -4,7 +4,11 @@
   <app-project-nav></app-project-nav>
 
   <!-- Este listado va en la parte interna de gestión -->
-  <mat-accordion class="example-headers-align">
+  <mat-accordion
+    class="example-headers-align"
+    multi="true"
+    *ngIf="projects.length > 0 && !isLoading"
+  >
     <mat-expansion-panel
       *ngFor="let project of projects"
       [expanded]="step === 0"
@@ -44,7 +48,11 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <div class="alert alert-warning" role="alert" *ngIf="projects.length == 0">
+  <div
+    class="alert alert-warning"
+    role="alert"
+    *ngIf="projects.length <= 0 && !isLoading"
+  >
     No hay proyectos todavía
   </div>
 
