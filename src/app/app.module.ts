@@ -1,8 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
-
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import {
   MatInputModule,
@@ -21,7 +19,8 @@ import { ProjectCreateComponent } from "./components/projects/project-create/pro
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProjectNavComponent } from "./components/projects/project-nav/project-nav.component";
 import { ProjectListComponent } from "./components/projects/project-list/project-list.component";
-//import { ProjectService } from "./shared/services/project.service";
+import { LoginComponent } from "./components/auth/login/login.component";
+import { SignupComponent } from './components/auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,9 @@ import { ProjectListComponent } from "./components/projects/project-list/project
     FooterComponent,
     ProjectCreateComponent,
     ProjectNavComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
