@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
+import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
-import { Project } from "../project.model";
+import { Project } from "../models/project.model";
 
 /**
  * Esto (@Injectable) hace que el servicio sea inyectable,
@@ -22,10 +23,21 @@ export class ProjectService {
   //Obtiene todos los proyectos
   getProjects() {
     this.http
-      .get<{ message: string; projects: Project[] }>(this.url)
-      .subscribe(projectData => {
-        this.projects = projectData.projects;
-        this.projectsUpdated.next([...this.projects]);
+      .get<{ message: string; projects: any }>(this.url)
+      .pipe(
+        map(projectData => {
+          return projectData.projects.map(project => {
+            return {
+              title: project.title,
+              description: project.description,
+              id: project._id
+            };
+          });
+        })
+      )
+      .subscribe(transformedProjects => {
+        this.projects = transformedProjects.projects;
+        //this.projectsUpdated.next([...this.projects]);
       });
   }
 
@@ -47,8 +59,10 @@ export class ProjectService {
       description: description
     };
     this.http
-      .post<{ message: string }>(this.url, project)
+      .post<{ message: string; projectId: string }>(this.url, project)
       .subscribe(responseData => {
+        const id = responseData.projectId;
+        project.id = id;
         console.log(responseData.message);
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);

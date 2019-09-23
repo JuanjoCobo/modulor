@@ -5,19 +5,6 @@ const Project = require("../models/project");
 const router = express.Router();
 //devuelve proyectos al front
 router.get("", (req, res, next) => {
-  const projects = [
-    {
-      id: "sldf1232",
-      title: "Primer proyecto del servidor",
-      description: "contenido 1"
-    },
-    {
-      id: "sldf1768",
-      title: "Segundo proyecto del servidor",
-      description: "contenido 2"
-    }
-  ];
-
   Project.find().then(documents => {
     res.status(200).json({
       message: "Projects fetched successfully",
@@ -69,8 +56,6 @@ router.delete("/:id", (req, res, next) => {
     console.log(result);
     res.status(200).json({ message: "Project deleted!" });
   });
-
-  //metodo borrar de la BBDD una vez pueda trabajar con ella en casa
 });
 
 module.exports = router;

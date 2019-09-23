@@ -1,12 +1,12 @@
 <form (submit)="onSignUp(signUpForm)" #signUpForm="ngForm" *ngIf="!isLoading">
   <div class="form-group">
-    <label for="exampleInputEmail1">Usuario o correo</label>
+    <label for="inputName">Usuario o correo</label>
     <input
       name="user"
       ngModel
       type="text"
       class="form-control"
-      id="exampleInputEmail1"
+      id="inputName"
       aria-describedby="emailHelp"
       placeholder="Introduce nombre usuario o correo electrónico"
       #userInput="ngModel"
@@ -16,17 +16,45 @@
     <p *ngIf="userInput.invalid">Usuario incorrecto</p>
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Contraseña</label>
+    <label for="inputEmail">Email</label>
+    <input
+      name="email"
+      ngModel
+      type="text"
+      class="form-control"
+      id="inputEmail"
+      placeholder="Introduce correo"
+      #emailInput="ngModel"
+      required
+      email
+    />
+  </div>
+  <div class="form-group">
+    <label for="inputPass">Contraseña</label>
     <input
       name="pass"
       ngModel
       type="password"
       class="form-control"
-      id="exampleInputPassword1"
+      id="inputPass"
       placeholder="Introduce contraseña"
       #passInput="ngModel"
       required
       pass
+    />
+  </div>
+  <div class="form-group">
+    <label for="inputRol">Rol</label>
+    <input
+      name="rol"
+      ngModel
+      type="text"
+      class="form-control"
+      id="inputRol"
+      placeholder="Introduce rol"
+      #rolInput="ngModel"
+      required
+      rol
     />
   </div>
   <button type="submit" class="btn btn-primary">Crear</button>

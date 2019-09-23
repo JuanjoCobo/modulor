@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { ProjectService } from "../../../shared/services/project.service";
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { Project } from "src/app/shared/project.model";
+import { Project } from "src/app/shared/models/project.model";
 
 @Component({
   selector: "app-project-create",
@@ -11,13 +11,12 @@ import { Project } from "src/app/shared/project.model";
   styleUrls: ["./project-create.component.css"]
 })
 export class ProjectCreateComponent implements OnInit {
+  project: Project;
   private mode = "create";
   private projectId: string;
 
   //para spinner
   isLoading: boolean = false;
-
-  project: Project;
 
   constructor(
     public projectService: ProjectService,
