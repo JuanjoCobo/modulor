@@ -1,5 +1,4 @@
 export interface AuthData {
-  name: string;
-  email: string;
+  user: string; //user puede ser email o name
   pass: string;
 }

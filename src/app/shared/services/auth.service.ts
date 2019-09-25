@@ -2,44 +2,52 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
+//modelo AuthData para autenticar/logar
 import { AuthData } from "../models/auth-data.model";
+//modelo User para registrar/crear
+import { User } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  private users: AuthData[] = [];
-
   public url: string = "http://localhost:3000/api/users";
 
   constructor(private http: HttpClient) {}
 
-  //Obtiene todos los usuarios
-  getUsers() {
-    this.http
-      .get<{ message: string; users: any }>(this.url)
-      .pipe(
-        map(userData => {
-          return userData.users.map(user => {
-            return {
-              name: user.name,
-              email: user.email,
-              id: user._id
-            };
-          });
-        })
-      )
-      .subscribe(transformedUsers => {
-        this.users = transformedUsers.users;
-      });
-  }
-
+  //Obtiene todos los usuarios (PROBAR)
+  getUsers() {}
+  /**
+   * Método crear/registrar usuario
+   * Se usa como modelo User porque se quieren introducir todos estos campos
+   * @param name
+   * @param email
+   * @param pass
+   */
   createUser(name: string, email: string, pass: string) {
-    const authData: AuthData = {
+    const user: User = {
       name: name,
       email: email,
       pass: pass
     };
-    this.http.post(this.url + "/signup", authData).subscribe(response => {
+    this.http.post(this.url + "/signup", user).subscribe(response => {
       console.log(response);
+    });
+  }
+
+  /**
+   * Método logar/autenticar usuario
+   * Se usa como modelo AuthData porque solo necesitamos dos campos,
+   * user, que puede ser name o email del usuario, y pass.
+   * @param user puede ser name o email del usuario
+   * @param pass
+   */
+  loginUser(user: string, pass: string) {
+    const authData: AuthData = {
+      user: user,
+      pass: pass
+    };
+    this.http.post(this.url + "/login", authData).subscribe(response => {
+      console.log(response);
+      //enviar response a componente login
     });
   }
 }

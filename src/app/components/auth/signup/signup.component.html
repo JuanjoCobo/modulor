@@ -1,3 +1,4 @@
+<br /><br />
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <form (submit)="onSignUp(signUpForm)" #signUpForm="ngForm" *ngIf="!isLoading">
   <div class="form-group">
@@ -14,14 +15,14 @@
       required
       name2
     />
-    <p *ngIf="nameInput.invalid">Usuario incorrecto</p>
+    <p *ngIf="nameInput.invalid">Nombre incorrecto</p>
   </div>
   <div class="form-group">
     <label for="inputEmail">Email</label>
     <input
       name="email"
       ngModel
-      type="text"
+      type="email"
       class="form-control"
       id="inputEmail"
       placeholder="Introduce correo"
