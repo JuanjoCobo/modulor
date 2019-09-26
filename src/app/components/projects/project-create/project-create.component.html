@@ -30,6 +30,10 @@
         >
       </mat-form-field>
     </p>
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Seleccionar imagen</button>
+      <input type="file" #filePicker>
+    </div>
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Descripción proyecto</mat-label>
@@ -48,8 +52,9 @@
         >
       </mat-form-field>
     </p>
+    
     <button mat-raised-button color="primary" type="submit">
-      Crear Proyecto
+      Guardar
     </button>
     <button mat-raised-button color="link" type="reset">
       Restaurar
