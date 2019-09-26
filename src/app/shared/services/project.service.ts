@@ -66,7 +66,7 @@ export class ProjectService {
         console.log(responseData.message);
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
-        //spinner
+        //redirige a listado proyectos
         this.router.navigate(["/proyectos"]);
       });
   }
@@ -81,17 +81,17 @@ export class ProjectService {
     this.http
       .put<{ message: string }>(this.url + "/" + id, project)
       .subscribe(responseData => {
-        console.log(responseData.message);
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
-        //spinner
+        console.log(responseData.message);
+        //redirige a listado proyectos
         this.router.navigate(["/proyectos"]);
       });
   }
 
   deleteProject(projectId: string) {
-    this.http.delete(this.url + "/" + projectId).subscribe(() => {
-      console.log("deleted");
+    this.http.delete(this.url + "/" + projectId).subscribe(response => {
+      console.log(response);
     });
   }
 }

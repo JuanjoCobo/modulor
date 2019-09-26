@@ -1,8 +1,7 @@
 const express = require("express");
-
+const router = express.Router();
 const Project = require("../models/project");
 
-const router = express.Router();
 //devuelve todos los proyectos
 router.get("", (req, res, next) => {
   Project.find().then(documents => {
@@ -53,7 +52,6 @@ router.put("/:id", (req, res, next) => {
 //elimina proyecto
 router.delete("/:id", (req, res, next) => {
   Project.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
     res.status(200).json({ message: "Project deleted successfully" });
   });
 });
