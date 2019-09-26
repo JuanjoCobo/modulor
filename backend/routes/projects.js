@@ -3,7 +3,7 @@ const express = require("express");
 const Project = require("../models/project");
 
 const router = express.Router();
-//devuelve proyectos al front
+//devuelve todos los proyectos
 router.get("", (req, res, next) => {
   Project.find().then(documents => {
     res.status(200).json({
@@ -46,7 +46,7 @@ router.put("/:id", (req, res, next) => {
     description: req.body.description
   });
   Project.updateOne({ _id: req.params.id }, project).then(result => {
-    res.status(200).json({ message: "Update successfully" });
+    res.status(200).json({ message: "Project updated successfully" });
   });
 });
 
@@ -54,7 +54,7 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
   Project.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
-    res.status(200).json({ message: "Project deleted!" });
+    res.status(200).json({ message: "Project deleted successfully" });
   });
 });
 

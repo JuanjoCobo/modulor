@@ -2,19 +2,14 @@
   class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
 >
   <app-project-nav></app-project-nav>
-
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
   <!-- Este listado va en la parte interna de gestión -->
   <mat-accordion
     class="example-headers-align"
     multi="true"
     *ngIf="projects.length > 0 && !isLoading"
   >
-    <mat-expansion-panel
-      *ngFor="let project of projects"
-      [expanded]="step === 0"
-      (opened)="setStep(0)"
-      hideToggle
-    >
+    <mat-expansion-panel *ngFor="let project of projects" hideToggle>
       <mat-expansion-panel-header>
         {{ project.title }}
         <!-- Mostrar imagen proyecto en miniatura -->
@@ -34,13 +29,13 @@
       </mat-form-field>
       -->
       <mat-action-row>
-        <button
+        <a
           mat-button
           color="accent"
           [routerLink]="['/editar-proyecto', project.id]"
         >
           EDITAR
-        </button>
+        </a>
         <button mat-button color="warn" (click)="onDelete(project.id)">
           ELIMINAR
         </button>
@@ -55,7 +50,6 @@
   >
     No hay proyectos todavía
   </div>
-
   <!-- / Fin listado gestion -->
 
   <!--
@@ -74,6 +68,7 @@
 </div>
 -->
   <!-- Este listado de cards de proyectos va en la parte publica -->
+  <!--
   <h3>Proyectos</h3>
   <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div
@@ -81,7 +76,7 @@
       *ngFor="let project of projects"
     >
       <div class="my-3 py-3">
-        <!-- mostrar proyectos del back-->
+         mostrar proyectos del back
         <h2 class="display-5">Nombre: {{ project.title }}</h2>
         <p class="lead">Contenido: {{ project.description }}</p>
       </div>
@@ -91,5 +86,6 @@
       ></div>
     </div>
   </div>
+  -->
   <!-- / Fin listado proyectos publicos -->
 </div>

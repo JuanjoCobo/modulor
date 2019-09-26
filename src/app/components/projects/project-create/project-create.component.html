@@ -4,21 +4,26 @@
       ><span>Ver proyectos</span></a
     >
   </li>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form
-    class="example-form"
     (submit)="onSaveProject(projectForm)"
     #projectForm="ngForm"
+    class="example-form"
+    *ngIf="!isLoading"
   >
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Título proyecto</mat-label>
         <input
-          matInput
-          type="text"
-          [(ngModel)]="project.title"
           name="title"
+          [ngModel]="project?.title"
+          type="text"
+          matInput
+          id="titleInput"
           #title="ngModel"
           minlength="3"
+          required
+          title
         />
         <mat-error *ngIf="title.invalid"
           >Por favor, introduce un título válido.</mat-error
@@ -29,11 +34,14 @@
       <mat-form-field appearance="legacy">
         <mat-label>Descripción proyecto</mat-label>
         <textarea
-          matInput
-          [(ngModel)]="project.description"
           name="description"
+          [ngModel]="project?.description"
+          matInput
+          id="descInput"
           #description="ngModel"
-          rows="4"
+          required
+          minlength="3"
+          description
         ></textarea>
         <mat-error *ngIf="description.invalid"
           >Por favor, introduce una descripción válida.</mat-error

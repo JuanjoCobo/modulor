@@ -11,9 +11,10 @@ import { Project } from "src/app/shared/models/project.model";
   styleUrls: ["./project-create.component.css"]
 })
 export class ProjectCreateComponent implements OnInit {
-  project: Project;
-  private mode = "create";
+  //modo form puede ser create o edit, para crear o editar proyectos, usamos el mismo formulario
+  private mode = "";
   private projectId: string;
+  project: Project;
 
   //para spinner
   isLoading: boolean = false;
@@ -46,6 +47,7 @@ export class ProjectCreateComponent implements OnInit {
     });
   }
 
+  //Recibe datos del formulario
   onSaveProject(form: NgForm) {
     if (form.invalid) {
       return;
@@ -53,7 +55,7 @@ export class ProjectCreateComponent implements OnInit {
     this.isLoading = true;
     if (this.mode === "create") {
       this.projectService.addProject(form.value.title, form.value.description);
-    } else {
+    } else if (this.mode === "edit") {
       this.projectService.updateProject(
         this.projectId,
         form.value.title,

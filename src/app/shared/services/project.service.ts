@@ -36,8 +36,8 @@ export class ProjectService {
         })
       )
       .subscribe(transformedProjects => {
-        this.projects = transformedProjects.projects;
-        //this.projectsUpdated.next([...this.projects]);
+        this.projects = transformedProjects;
+        this.projectsUpdated.next([...this.projects]);
       });
   }
 
