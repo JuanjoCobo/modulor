@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
 
 //modelo AuthData para autenticar/logar
 import { AuthData } from "../models/auth-data.model";
@@ -22,11 +21,12 @@ export class AuthService {
    * @param email
    * @param pass
    */
-  createUser(name: string, email: string, pass: string) {
+  createUser(name: string, email: string, pass: string, rol: string) {
     const user: User = {
       name: name,
       email: email,
-      pass: pass
+      pass: pass,
+      rol: rol
     };
     this.http.post(this.url + "/signup", user).subscribe(response => {
       console.log(response);
@@ -47,7 +47,7 @@ export class AuthService {
     };
     this.http.post(this.url + "/login", authData).subscribe(response => {
       console.log(response);
-      //enviar response a componente login
+      //enviar response a componente login (login.component.ts)
     });
   }
 }
