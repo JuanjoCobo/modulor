@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProjectNavComponent } from "./components/projects/project-nav/project-nav.component";
 import { ProjectListComponent } from "./components/projects/project-list/project-list.component";
 import { LoginComponent } from "./components/auth/login/login.component";
-import { SignupComponent } from './components/auth/signup/signup.component';
+import { SignupComponent } from "./components/auth/signup/signup.component";
 
 @NgModule({
   declarations: [
