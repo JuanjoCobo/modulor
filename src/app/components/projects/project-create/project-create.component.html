@@ -27,7 +27,11 @@
       <input type="file" #filePicker (change)="onFilePicked($event)" />
     </div>
     <div class="image-preview">
-      <img *ngIf="imagePreview" [src]="imagePreview" [alt]="form.value.title" />
+      <img
+        *ngIf="imagePreview && imagePreview !== '' && form.get('image').valid"
+        [src]="imagePreview"
+        [alt]="form.value.title"
+      />
       <p *ngIf="!imagePreview">No hay imagen seleccionada</p>
     </div>
     <p>

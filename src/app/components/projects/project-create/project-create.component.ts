@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { ProjectService } from "../../../shared/services/project.service";
 import { Project } from "src/app/shared/models/project.model";
 
+import { mimeType } from "src/app/shared/utils/mime-type.validator";
+
 @Component({
   selector: "app-project-create",
   templateUrl: "./project-create.component.html",
@@ -39,7 +41,8 @@ export class ProjectCreateComponent implements OnInit {
         validators: [Validators.required]
       }),
       image: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
