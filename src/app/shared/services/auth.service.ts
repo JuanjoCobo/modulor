@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 //modelo AuthData para autenticar/logar
-import { AuthData } from "../models/auth-data.model";
+import { AuthData } from '../models/auth-data.model';
 //modelo User para registrar/crear
-import { User } from "../models/user.model";
+import { User } from '../models/user.model';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  public url: string = "http://localhost:3000/api/users";
+  public url: string = 'http://localhost:3000/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -28,7 +28,7 @@ export class AuthService {
       pass: pass,
       rol: rol
     };
-    this.http.post(this.url + "/signup", user).subscribe(response => {
+    this.http.post(this.url + '/signup', user).subscribe(response => {
       console.log(response);
     });
   }
@@ -45,7 +45,7 @@ export class AuthService {
       user: user,
       pass: pass
     };
-    this.http.post(this.url + "/login", authData).subscribe(response => {
+    this.http.post(this.url + '/login', authData).subscribe(response => {
       console.log(response);
       //enviar response a componente login (login.component.ts)
     });

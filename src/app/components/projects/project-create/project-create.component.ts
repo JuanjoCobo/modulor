@@ -1,20 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { NgForm, FormGroup, Validators, FormControl } from "@angular/forms";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { NgForm, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { ProjectService } from "../../../shared/services/project.service";
-import { Project } from "src/app/shared/models/project.model";
+import { ProjectService } from '../../../shared/services/project.service';
+import { Project } from 'src/app/shared/models/project.model';
 
-import { mimeType } from "src/app/shared/utils/mime-type.validator";
+import { mimeType } from 'src/app/shared/utils/mime-type.validator';
 
 @Component({
-  selector: "app-project-create",
-  templateUrl: "./project-create.component.html",
-  styleUrls: ["./project-create.component.css"]
+  selector: 'app-project-create',
+  templateUrl: './project-create.component.html',
+  styleUrls: ['./project-create.component.css']
 })
 export class ProjectCreateComponent implements OnInit {
   //modo form puede ser create o edit, para crear o editar proyectos, usamos el mismo formulario
-  private mode = "";
+  private mode = '';
   private projectId: string;
   project: Project;
 
@@ -46,9 +46,9 @@ export class ProjectCreateComponent implements OnInit {
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("projectId")) {
-        this.mode = "edit";
-        this.projectId = paramMap.get("projectId");
+      if (paramMap.has('projectId')) {
+        this.mode = 'edit';
+        this.projectId = paramMap.get('projectId');
         this.isLoading = true;
         this.projectService
           .getProjectById(this.projectId)
@@ -65,7 +65,7 @@ export class ProjectCreateComponent implements OnInit {
             });
           });
       } else {
-        this.mode = "create";
+        this.mode = 'create';
         this.projectId = null;
       }
     });
@@ -75,7 +75,7 @@ export class ProjectCreateComponent implements OnInit {
   onFilePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ image: file });
-    this.form.get("image").updateValueAndValidity();
+    this.form.get('image').updateValueAndValidity();
     const fileReader = new FileReader();
     fileReader.onload = () => {
       this.imagePreview = fileReader.result as string;
@@ -89,12 +89,12 @@ export class ProjectCreateComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    if (this.mode === "create") {
+    if (this.mode === 'create') {
       this.projectService.addProject(
         this.form.value.title,
         this.form.value.description
       );
-    } else if (this.mode === "edit") {
+    } else if (this.mode === 'edit') {
       this.projectService.updateProject(
         this.projectId,
         this.form.value.title,

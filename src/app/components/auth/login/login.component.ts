@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
-import { AuthService } from "src/app/shared/services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   isLoading: boolean = false;
@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log("usuario " + form.value.user);
-    console.log("pass " + form.value.pass);
+    console.log('usuario ' + form.value.user);
+    console.log('pass ' + form.value.pass);
     this.authService.loginUser(form.value.user, form.value.pass);
   }
 }

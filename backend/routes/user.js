@@ -1,23 +1,23 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const User = require("../models/user");
+const User = require('../models/user');
 
 const router = express.Router();
 
 //devuelve users al front
-router.get("", (req, res, next) => {
+router.get('', (req, res, next) => {
   User.find().then(documents => {
     res.status(200).json({
-      message: "Users fetched successfully",
+      message: 'Users fetched successfully',
       users: documents
     });
   });
 });
 
 //Crear usuario
-router.post("/signup", (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   bcrypt.hash(req.body.pass, 10).then(hash => {
     const user = new User({
       name: req.body.name,
@@ -29,7 +29,7 @@ router.post("/signup", (req, res, next) => {
       .save()
       .then(result => {
         res.status(201).json({
-          message: "User created",
+          message: 'User created',
           result: result
         });
       })
@@ -42,7 +42,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 //login
-router.post("/login", (req, res, next) => {
+router.post('/login', (req, res, next) => {
   var fetchedUser; //para guardar usuario y usarlo en el método
   //findOne() recibe dos argumentos para comprobar el name o el email
   User.findOne({
@@ -50,7 +50,7 @@ router.post("/login", (req, res, next) => {
   })
     .then(user => {
       if (!user) {
-        return res.status(401).json({ message: "Auth failed 1" });
+        return res.status(401).json({ message: 'Auth failed 1' });
       }
       fetchedUser = user;
       //se compara la pass introducida con la pass del usuario almacenada en la BBDD
@@ -58,7 +58,7 @@ router.post("/login", (req, res, next) => {
     })
     .then(result => {
       if (!result) {
-        return res.status(401).json({ message: "Auth failed 2" });
+        return res.status(401).json({ message: 'Auth failed 2' });
       }
       /**
        * sign() crea un nuevo token
@@ -66,17 +66,17 @@ router.post("/login", (req, res, next) => {
        */
       const token = jwt.sign(
         { userName: fetchedUser.name, userId: fetchedUser._id },
-        "secret_this_should_be_longer",
-        { expiresIn: "1h" }
+        'secret_this_should_be_longer',
+        { expiresIn: '1h' }
       );
       res.status(200).json({
         token: token,
-        message: "Token sent"
+        message: 'Token sent'
       });
     })
     .catch(err => {
       console.log(err);
-      return res.status(401).json({ message: "Auth failed 3" });
+      return res.status(401).json({ message: 'Auth failed 3' });
     });
 });
 
