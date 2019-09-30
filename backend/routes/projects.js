@@ -1,6 +1,33 @@
 const express = require('express');
+const multer = require('multer');
+
 const router = express.Router();
 const Project = require('../models/project');
+
+const MIME_TYPE_MAP = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg'
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    var error = new Error('Invalid mime type');
+    if (isValid) {
+      error = null;
+    }
+    callback(error, 'backend/images');
+  },
+  filename: (req, file, callback) => {
+    const name = file.originalname
+      .toLowerCase()
+      .split(' ')
+      .join('-');
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    callback(null, name + '-' + Date.now() + '.' + ext);
+  }
+});
 
 //devuelve todos los proyectos
 router.get('', (req, res, next) => {
@@ -24,18 +51,22 @@ router.get('/:id', (req, res, next) => {
 });
 
 //aniade proyecto
-router.post('', (req, res, next) => {
-  const project = new Project({
-    title: req.body.title,
-    description: req.body.description
-  });
-  project.save().then(createdProject => {
-    res.status(201).json({
-      message: 'Project added successfully!',
-      projectId: createdProject._id
+router.post(
+  '',
+  multer({ storage: storage }).single('image'),
+  (req, res, next) => {
+    const project = new Project({
+      title: req.body.title,
+      description: req.body.description
     });
-  });
-});
+    project.save().then(createdProject => {
+      res.status(201).json({
+        message: 'Project added successfully!',
+        projectId: createdProject._id
+      });
+    });
+  }
+);
 
 //edita proyecto
 router.put('/:id', (req, res, next) => {

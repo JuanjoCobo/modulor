@@ -13,7 +13,7 @@ import { mimeType } from 'src/app/shared/utils/mime-type.validator';
   styleUrls: ['./project-create.component.css']
 })
 export class ProjectCreateComponent implements OnInit {
-  //modo form puede ser create o edit, para crear o editar proyectos, usamos el mismo formulario
+  //modo form puede ser create o edit, para crear o editar proyectos, usando el mismo formulario
   private mode = '';
   private projectId: string;
   project: Project;
@@ -62,6 +62,7 @@ export class ProjectCreateComponent implements OnInit {
             this.form.setValue({
               title: this.project.title,
               description: this.project.description
+              //añadir campo imagen
             });
           });
       } else {
@@ -92,7 +93,8 @@ export class ProjectCreateComponent implements OnInit {
     if (this.mode === 'create') {
       this.projectService.addProject(
         this.form.value.title,
-        this.form.value.description
+        this.form.value.description,
+        this.form.value.image
       );
     } else if (this.mode === 'edit') {
       this.projectService.updateProject(

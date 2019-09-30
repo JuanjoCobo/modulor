@@ -52,18 +52,26 @@ export class ProjectService {
   }
 
   //Añadir un proyecto
-  addProject(title: string, description: string) {
+  addProject(title: string, description: string, image: File) {
     const project: Project = {
       id: null,
       title: title,
       description: description
     };
+    const projectData = new FormData();
+    projectData.append('title', title);
+    projectData.append('description', description);
+    projectData.append('image', image, title);
     this.http
-      .post<{ message: string; projectId: string }>(this.url, project)
+      .post<{ message: string; projectId: string }>(this.url, projectData)
       .subscribe(responseData => {
-        const id = responseData.projectId;
-        project.id = id;
-        console.log(responseData.message);
+        //prueba
+        const project: Project = {
+          id: responseData.projectId,
+          title: title,
+          description: description
+        };
+        //
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
         //redirige a listado proyectos
