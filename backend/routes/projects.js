@@ -55,14 +55,19 @@ router.post(
   '',
   multer({ storage: storage }).single('image'),
   (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host');
     const project = new Project({
       title: req.body.title,
-      description: req.body.description
+      description: req.body.description,
+      imagePath: url + '/images/' + req.file.filename
     });
     project.save().then(createdProject => {
       res.status(201).json({
         message: 'Project added successfully!',
-        projectId: createdProject._id
+        project: {
+          ...createdProject,
+          id: createdProject._id
+        }
       });
     });
   }

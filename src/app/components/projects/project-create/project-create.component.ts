@@ -57,7 +57,8 @@ export class ProjectCreateComponent implements OnInit {
             this.project = {
               id: projectData._id,
               title: projectData.title,
-              description: projectData.description
+              description: projectData.description,
+              imagePath: null
             };
             this.form.setValue({
               title: this.project.title,

@@ -30,7 +30,8 @@ export class ProjectService {
             return {
               title: project.title,
               description: project.description,
-              id: project._id
+              id: project._id,
+              imagePath: project.imagePath
             };
           });
         })
@@ -53,23 +54,19 @@ export class ProjectService {
 
   //Añadir un proyecto
   addProject(title: string, description: string, image: File) {
-    const project: Project = {
-      id: null,
-      title: title,
-      description: description
-    };
     const projectData = new FormData();
     projectData.append('title', title);
     projectData.append('description', description);
     projectData.append('image', image, title);
     this.http
-      .post<{ message: string; projectId: string }>(this.url, projectData)
+      .post<{ message: string; project: Project }>(this.url, projectData)
       .subscribe(responseData => {
         //prueba
         const project: Project = {
-          id: responseData.projectId,
+          id: responseData.project.id,
           title: title,
-          description: description
+          description: description,
+          imagePath: responseData.project.imagePath
         };
         //
         this.projects.push(project);
@@ -84,7 +81,8 @@ export class ProjectService {
     const project: Project = {
       id: id,
       title: title,
-      description: description
+      description: description,
+      imagePath: null
     };
     this.http
       .put<{ message: string }>(this.url + '/' + id, project)
