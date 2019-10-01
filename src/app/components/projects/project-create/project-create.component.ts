@@ -58,12 +58,12 @@ export class ProjectCreateComponent implements OnInit {
               id: projectData._id,
               title: projectData.title,
               description: projectData.description,
-              imagePath: null
+              imagePath: projectData.imagePath
             };
             this.form.setValue({
               title: this.project.title,
-              description: this.project.description
-              //añadir campo imagen
+              description: this.project.description,
+              image: this.project.imagePath
             });
           });
       } else {
@@ -101,7 +101,8 @@ export class ProjectCreateComponent implements OnInit {
       this.projectService.updateProject(
         this.projectId,
         this.form.value.title,
-        this.form.value.description
+        this.form.value.description,
+        this.form.value.image
       );
     }
     this.form.reset();

@@ -74,20 +74,32 @@ router.post(
 );
 
 //edita proyecto
-router.put('/:id', (req, res, next) => {
-  const project = new Project({
-    _id: req.body.id,
-    title: req.body.title,
-    description: req.body.description
-  });
-  Project.updateOne({ _id: req.params.id }, project).then(result => {
-    res.status(200).json({ message: 'Project updated successfully' });
-  });
-});
+router.put(
+  '/:id',
+  multer({ storage: storage }).single('image'),
+  (req, res, next) => {
+    var imagePath = req.body.imagePath;
+    if (req.file) {
+      const url = req.protocol + '://' + req.get('host');
+      imagePath = url + '/images/' + req.file.filename;
+    }
+    const project = new Project({
+      _id: req.body.id,
+      title: req.body.title,
+      description: req.body.description,
+      imagePath: imagePath
+    });
+    console.log(project);
+    Project.updateOne({ _id: req.params.id }, project).then(result => {
+      res.status(200).json({ message: 'Project updated successfully' });
+    });
+  }
+);
 
 //elimina proyecto
 router.delete('/:id', (req, res, next) => {
   Project.deleteOne({ _id: req.params.id }).then(result => {
+    console.log(result);
     res.status(200).json({ message: 'Project deleted successfully' });
   });
 });

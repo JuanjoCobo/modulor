@@ -47,9 +47,12 @@ export class ProjectService {
   }
 
   getProjectById(id: string) {
-    return this.http.get<{ _id: string; title: string; description: string }>(
-      this.url + '/' + id
-    );
+    return this.http.get<{
+      _id: string;
+      title: string;
+      description: string;
+      imagePath: string;
+    }>(this.url + '/' + id);
   }
 
   //Añadir un proyecto
@@ -72,32 +75,58 @@ export class ProjectService {
         this.projects.push(project);
         this.projectsUpdated.next([...this.projects]);
         //redirige a listado proyectos
-        this.router.navigate(['/proyectos']);
+        this.router.navigate(['/proyectos-int']);
       });
   }
 
   //Editar un proyecto
-  updateProject(id: string, title: string, description: string) {
-    const project: Project = {
-      id: id,
-      title: title,
-      description: description,
-      imagePath: null
-    };
+  updateProject(
+    id: string,
+    title: string,
+    description: string,
+    image: File | string
+  ) {
+    var projectData: Project | FormData;
+    if (typeof image === 'object') {
+      projectData = new FormData();
+      projectData.append('id', id);
+      projectData.append('title', title);
+      projectData.append('description', description);
+      projectData.append('image', image, title);
+    } else {
+      projectData = {
+        id: id,
+        title: title,
+        description: description,
+        imagePath: image
+      };
+    }
     this.http
-      .put<{ message: string }>(this.url + '/' + id, project)
-      .subscribe(responseData => {
-        this.projects.push(project);
+      .put<{ message: string }>(this.url + '/' + id, projectData)
+      .subscribe(response => {
+        const updatedProjects = [...this.projects];
+        const oldProjectIndex = updatedProjects.findIndex(p => p.id === id);
+        const project: Project = {
+          id: id,
+          title: title,
+          description: description,
+          imagePath: ''
+        };
+        updatedProjects[oldProjectIndex] = project;
+        this.projects = updatedProjects;
         this.projectsUpdated.next([...this.projects]);
-        console.log(responseData.message);
-        //redirige a listado proyectos
-        this.router.navigate(['/proyectos']);
+        this.router.navigate(['/proyectos-int']);
       });
   }
 
+  //Eliminar un proyecto
   deleteProject(projectId: string) {
     this.http.delete(this.url + '/' + projectId).subscribe(response => {
-      console.log(response);
+      const updatedProjects = this.projects.filter(
+        project => project.id !== projectId
+      );
+      this.projects = updatedProjects;
+      this.projectsUpdated.next([...this.projects]);
     });
   }
 }
