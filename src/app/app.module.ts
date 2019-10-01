@@ -21,6 +21,7 @@ import { ProjectNavComponent } from './components/projects/project-nav/project-n
 import { ProjectListComponent } from './components/projects/project-list/project-list.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+import { ProjectIntComponent } from './components/projects/project-int/project-int.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SignupComponent } from './components/auth/signup/signup.component';
     ProjectNavComponent,
     ProjectListComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProjectIntComponent
   ],
   imports: [
     BrowserModule,

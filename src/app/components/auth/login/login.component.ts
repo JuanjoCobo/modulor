@@ -18,8 +18,6 @@ export class LoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log('usuario ' + form.value.user);
-    console.log('pass ' + form.value.pass);
     this.authService.loginUser(form.value.user, form.value.pass);
   }
 }

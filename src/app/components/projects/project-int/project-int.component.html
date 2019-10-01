@@ -1,0 +1,58 @@
+<div
+  class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
+>
+  <app-project-nav></app-project-nav>
+  <!-- Meter otro semáforo para desactivar spinner cuando no se obtenga respuesta del back-->
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <!-- Este listado va en la parte interna de gestión -->
+  <mat-accordion
+    class="example-headers-align"
+    multi="true"
+    *ngIf="projects.length > 0 && !isLoading"
+  >
+    <mat-expansion-panel *ngFor="let project of projects" hideToggle>
+      <mat-expansion-panel-header>
+        {{ project.title }}
+        <!-- Mostrar imagen proyecto en miniatura -->
+      </mat-expansion-panel-header>
+
+      <mat-panel-description>
+        {{ project.description }}
+      </mat-panel-description>
+      <div class="project-img">
+        <img [src]="project.imagePath" loading="lazy" [alt]="project.title" />
+      </div>
+
+      <!--
+      <mat-form-field>
+        <input matInput placeholder="First name" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" min="1" placeholder="Age" />
+      </mat-form-field>
+      -->
+      <mat-action-row>
+        <a
+          mat-button
+          color="accent"
+          [routerLink]="['/editar-proyecto', project.id]"
+        >
+          EDITAR
+        </a>
+        <button mat-button color="warn" (click)="onDelete(project.id)">
+          ELIMINAR
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div
+    class="alert alert-warning"
+    role="alert"
+    *ngIf="projects.length <= 0 && !isLoading"
+  >
+    No hay proyectos todavía
+  </div>
+  <!-- / Fin listado gestion -->
+</div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 //modelo AuthData para autenticar/logar
 import { AuthData } from '../models/auth-data.model';
@@ -10,7 +11,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   public url: string = 'http://localhost:3000/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //Obtiene todos los usuarios (PROBAR)
   getUsers() {}
@@ -48,6 +49,7 @@ export class AuthService {
     this.http.post(this.url + '/login', authData).subscribe(response => {
       console.log(response);
       //enviar response a componente login (login.component.ts)
+      this.router.navigate(['/proyectos-int']);
     });
   }
 }
