@@ -19,19 +19,8 @@ export class SignupComponent implements OnInit {
   onSignUp(form: NgForm) {
     if (form.invalid) {
       return;
-      //Código para probar que los campos se pasaban bien
-      /*
-      console.log('mal');
-      console.log(
-        ' usuario: ' +
-          form.value.name2 +
-          ' correo: ' +
-          form.value.email +
-          ' pass: ' +
-          form.value.pass
-      );
-      */
     }
+    this.isLoading = true;
     this.authService.createUser(
       form.value.name2,
       form.value.email,

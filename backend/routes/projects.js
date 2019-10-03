@@ -4,6 +4,8 @@ const multer = require('multer');
 const router = express.Router();
 const Project = require('../models/project');
 
+const checkAuth = require('../middelware/check-auth');
+
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -53,6 +55,7 @@ router.get('/:id', (req, res, next) => {
 //aniade proyecto
 router.post(
   '',
+  checkAuth,
   multer({ storage: storage }).single('image'),
   (req, res, next) => {
     const url = req.protocol + '://' + req.get('host');
@@ -76,6 +79,7 @@ router.post(
 //edita proyecto
 router.put(
   '/:id',
+  checkAuth,
   multer({ storage: storage }).single('image'),
   (req, res, next) => {
     var imagePath = req.body.imagePath;
@@ -97,7 +101,7 @@ router.put(
 );
 
 //elimina proyecto
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
   Project.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
     res.status(200).json({ message: 'Project deleted successfully' });

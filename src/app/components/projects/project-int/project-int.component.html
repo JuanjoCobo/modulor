@@ -32,7 +32,7 @@
         <input matInput type="number" min="1" placeholder="Age" />
       </mat-form-field>
       -->
-      <mat-action-row>
+      <mat-action-row *ngIf="userIsAuthenticated">
         <a
           mat-button
           color="accent"

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Project } from '../../../shared/models/project.model';
 
 import { ProjectService } from '../../../shared/services/project.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-project-int',
@@ -13,9 +14,14 @@ import { ProjectService } from '../../../shared/services/project.service';
 export class ProjectIntComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
   isLoading: boolean = false;
+  userIsAuthenticated = false;
   private projectsSub: Subscription;
+  private authStatusSub: Subscription;
 
-  constructor(public projectService: ProjectService) {}
+  constructor(
+    public projectService: ProjectService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -26,6 +32,13 @@ export class ProjectIntComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.projects = projects;
       });
+
+    this.userIsAuthenticated = this.authService.getIsAuthenticated();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated; //true
+      });
   }
 
   onDelete(projectId: string) {
@@ -34,5 +47,6 @@ export class ProjectIntComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.projectsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }

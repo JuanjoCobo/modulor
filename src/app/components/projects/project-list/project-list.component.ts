@@ -10,7 +10,7 @@ import { ProjectService } from '../../../shared/services/project.service';
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
-export class ProjectListComponent implements OnInit, OnDestroy {
+export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   isLoading: boolean = false;
   private projectsSub: Subscription;
@@ -26,13 +26,5 @@ export class ProjectListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.projects = projects;
       });
-  }
-
-  onDelete(projectId: string) {
-    this.projectService.deleteProject(projectId);
-  }
-
-  ngOnDestroy() {
-    this.projectsSub.unsubscribe();
   }
 }

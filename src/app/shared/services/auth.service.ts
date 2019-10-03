@@ -6,12 +6,30 @@ import { Router } from '@angular/router';
 import { AuthData } from '../models/auth-data.model';
 //modelo User para registrar/crear
 import { User } from '../models/user.model';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   public url: string = 'http://localhost:3000/api/users';
 
+  private isAuthenticated = false;
+  private token: string;
+  private tokenTimer: NodeJS.Timer;
+  private authStatusListener = new Subject<boolean>();
+
   constructor(private http: HttpClient, private router: Router) {}
+
+  getToken() {
+    return this.token;
+  }
+
+  getIsAuthenticated() {
+    return this.isAuthenticated;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
 
   //Obtiene todos los usuarios (PROBAR)
   getUsers() {}
@@ -46,10 +64,28 @@ export class AuthService {
       user: user,
       pass: pass
     };
-    this.http.post(this.url + '/login', authData).subscribe(response => {
-      console.log(response);
-      //enviar response a componente login (login.component.ts)
-      this.router.navigate(['/proyectos-int']);
-    });
+    this.http
+      .post<{ token: string; expiresIn: number }>(this.url + '/login', authData)
+      .subscribe(response => {
+        var token = response.token;
+        this.token = token;
+        if (token) {
+          const expiresInDuration = response.expiresIn;
+          this.tokenTimer = setTimeout(() => {
+            this.logOut();
+          }, expiresInDuration * 1000);
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          this.router.navigate(['/proyectos-int']);
+        }
+      });
+  }
+
+  logOut() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    clearTimeout(this.tokenTimer);
+    this.router.navigate(['/']);
   }
 }

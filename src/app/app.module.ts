@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   MatInputModule,
   MatFormFieldModule,
@@ -22,6 +22,7 @@ import { ProjectListComponent } from './components/projects/project-list/project
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { ProjectIntComponent } from './components/projects/project-int/project-int.component';
+import { AuthInterceptor } from './shared/utils/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { ProjectIntComponent } from './components/projects/project-int/project-i
     MatExpansionModule,
     MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

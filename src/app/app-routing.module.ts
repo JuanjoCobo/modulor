@@ -8,20 +8,34 @@ import { ProjectCreateComponent } from './components/projects/project-create/pro
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'inicio', component: HomeComponent },
   { path: 'proyectos', component: ProjectListComponent },
-  { path: 'proyectos-int', component: ProjectIntComponent },
-  { path: 'crear-proyecto', component: ProjectCreateComponent },
-  { path: 'editar-proyecto/:projectId', component: ProjectCreateComponent },
+  {
+    path: 'proyectos-int',
+    component: ProjectIntComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'crear-proyecto',
+    component: ProjectCreateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'editar-proyecto/:projectId',
+    component: ProjectCreateComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}

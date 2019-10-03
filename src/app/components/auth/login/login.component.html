@@ -35,5 +35,7 @@
     <input type="checkbox" class="form-check-input" id="exampleCheck1" />
     <label class="form-check-label" for="exampleCheck1">Recordar sesión</label>
   </div>
-  <button type="submit" class="btn btn-primary">Acceder</button>
+  <button type="submit" class="btn btn-primary" *ngIf="!isLoading">
+    Acceder
+  </button>
 </form>

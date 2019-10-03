@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
       );
       res.status(200).json({
         token: token,
-        message: 'Token sent'
+        expiresIn: 3600
       });
     })
     .catch(err => {

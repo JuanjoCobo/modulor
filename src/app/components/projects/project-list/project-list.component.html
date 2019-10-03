@@ -14,9 +14,10 @@
 </div>
 -->
 <!-- Este listado de cards de proyectos va en la parte publica -->
-
+<br /><br />
 <h3>Proyectos</h3>
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading" class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
   <div
     class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
     *ngFor="let project of projects"
