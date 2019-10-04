@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 //modelo AuthData para autenticar/logar
@@ -71,14 +71,34 @@ export class AuthService {
         this.token = token;
         if (token) {
           const expiresInDuration = response.expiresIn;
-          this.tokenTimer = setTimeout(() => {
-            this.logOut();
-          }, expiresInDuration * 1000);
+          this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(
+            now.getTime() + expiresInDuration * 1000
+          );
+          console.log(expirationDate); // expirationDate --> expira 1h despues de la actual
+          this.saveAuthData(token, expirationDate);
           this.router.navigate(['/proyectos-int']);
         }
       });
+  }
+
+  //verifica que existe el token y que la expiracion del mismo todavia no ha llegado
+  autoAuthUser() {
+    const authInformation = this.getAuthData();
+    if (!authInformation) {
+      return;
+    }
+    const now = new Date();
+    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+    if (expiresIn > 0) {
+      this.token = authInformation.token;
+      this.isAuthenticated = true;
+      this.setAuthTimer(expiresIn / 1000);
+      this.authStatusListener.next(true);
+    }
   }
 
   logOut() {
@@ -86,6 +106,38 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
-    this.router.navigate(['/']);
+    this.clearAuthData();
+    this.router.navigate(['/login']);
+  }
+
+  private setAuthTimer(duration: number) {
+    console.log('Setting timer: ' + duration);
+    this.tokenTimer = setTimeout(() => {
+      this.logOut();
+    }, duration * 1000);
+  }
+
+  //almacena el token en el 'local storage'
+  private saveAuthData(token: string, expirationDate: Date) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('expiration', expirationDate.toISOString());
+  }
+
+  private clearAuthData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+  }
+
+  //devuelve token y fecha si ambos existen, es decir, si estamos logados correctamente
+  private getAuthData() {
+    var token = localStorage.getItem('token');
+    var expirationDate = localStorage.getItem('expiration');
+    if (!token || !expirationDate) {
+      return;
+    }
+    return {
+      token: token,
+      expirationDate: new Date(expirationDate)
+    };
   }
 }

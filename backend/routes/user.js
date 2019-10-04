@@ -50,7 +50,9 @@ router.post('/login', (req, res, next) => {
   })
     .then(user => {
       if (!user) {
-        return res.status(401).json({ message: 'Auth failed 1' });
+        return res
+          .status(401)
+          .json({ message: 'Auth failed 1: no existe el usuario' });
       }
       fetchedUser = user;
       //se compara la pass introducida con la pass del usuario almacenada en la BBDD
@@ -58,7 +60,10 @@ router.post('/login', (req, res, next) => {
     })
     .then(result => {
       if (!result) {
-        return res.status(401).json({ message: 'Auth failed 2' });
+        return res.status(402).json({
+          message: 'Auth failed 2: pass incorrecta',
+          errorCode: 402
+        });
       }
       /**
        * sign() crea un nuevo token

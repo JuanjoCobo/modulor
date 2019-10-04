@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    //si status == 401, no autorizado, mostrar mensaje en el front
     this.isLoading = true;
     this.authService.loginUser(form.value.user, form.value.pass);
   }
