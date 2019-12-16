@@ -1,0 +1,14 @@
+{
+    "HOME_PAGE_TXT":
+    {
+        "TITLE": "título del home",
+        "SUBTITLE": "subtítulo",
+        "P1": " Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper"
+    },
+    "PROJECTS_PAGE_TXT":
+    {
+        "TITLE": "título del projects",
+        "SUBTITLE": "subtítulo",
+        "P1": " Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper"
+    }
+}
