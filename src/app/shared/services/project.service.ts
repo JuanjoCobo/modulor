@@ -16,7 +16,10 @@ export class ProjectService {
   private projects: Project[] = [];
   private projectsUpdated = new Subject<Project[]>();
 
-  public url: string = 'http://localhost:3000/api/projects';
+  /**
+   * TODO - crear un enviroment para guardar rutas y construirlas
+   */
+  public url: string = 'http://localhost:3001/api/projects';
 
   constructor(private http: HttpClient, private router: Router) {}
 

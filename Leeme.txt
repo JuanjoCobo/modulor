@@ -1,2 +1,0 @@
-Arrancar servidor back Node
-npm run start:server
